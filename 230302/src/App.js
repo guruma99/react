@@ -1,159 +1,63 @@
 /* eslint-disable */
 import logo from "./logo.svg";
 import "./App.css";
+import State from "./component/State";
 import { useState } from "react";
 
 function App() {
-  let user = "haemin kang";
-  // react 에서 변수처럼 자료를 보관할 수 있는 state문법
-  let [count, setCount] = useState([0, 0, 0]);
-  // let [like, setlike] = useState([0, 0, 0]);
+  //State 라는거에 반응하기 때문에 react
+  //리액트는 변수 없이 업데이트 됐다고 UI를 재렌더링 하지않는다.
+  //State가 변경 되었을 때만 UI를 재렌더링 한다.
 
-  let [count2, setCount2] = useState(5);
-  // 변수에 들어있는 데이터 html에 넣기
-  // jsx 중괄호 문법 사용
-  // 한 곳에다가 여러가지 자료를 저장하고 싶을 때 Array라는 자료형식을 사용한다.
-  let [title, setTitle] = useState([
-    "DW아카데미 405호",
-    "DW아카데미 203호",
-    "DW아카데미 301호",
-  ]);
+  let num = 0;
 
-  let [user_name, setname] = useState(["강해민", "강해민", "강해민"]);
-  let changeName = () => {
-    let newName =
-      user_name == ["강해민", "강해민", "강해민"]
-        ? ["사쿠라", "김채원", "강해민"]
-        : ["강해민", "강해민", "강해민"];
-    setname(newName);
+  // useState
+  // 1. import { useState } from "react";
+  // state를 사용하기 위해서 react에서 usestate를 데려온다.
+  // usestate => 리액트에서 제공하는 함수 중 하나 (훅)
+  // useState라는 함수가 무엇을 리턴하느냐?
+  // 아이템이 2개 들어있는 배열(Array)리턴
+  // 1. 초기값을 담고있는 state 변수
+  // 2. state값을 변경할 수 있도록 도와주는 set함수
+  // 이 두가지 값을 배열로 리턴한다.
+  // state를 변수처럼 사용하면 안되고, 값을 변경할 때는 항상 변경함수를 호출하고
+  // 값을 그 안에 집어 넣어야 한다.
+
+  const [count, setCount] = useState(0);
+  let increase = () => {
+    num = num + 1;
+    setCount(count + 1);
+    //state값이 업데이트 될 때 마다 function App을 다시 실행 시키면서 변경된 UI를 업데이트
+    //변수는 값을 저장하지 않고 함수가 호출될때마다 초기화 된다.
+    console.log("num", num, "state", count);
+    // console.log(count);
   };
 
-  // let bgc = {
-  //   backgroundColor: "blue",
-  // };
+  //console.log 두개 찍히는 이유 index.js의 <React.StrictMode> 떄문이다.
+  //App.js에 작성한 내용은 index.js를 거쳐서 'root'라는 아이디 값을 div에 그려진다.
+  //ScrictMode
+  //리액트로 개발할 때, 잠재적인 문제가 있는지 검사 해주는 모드
+  //StrictMode 스스로 문제점을 찾아주는건 아니지만,
+  //문제가 될 수 있는 함수를 두번 실행해서 쉽게 문제를 찾을 수 있게 도와주는 역할
+  //버그가아니라 react에서 의도되게 만들어놓은 기능이다.
+  // 💡 -> 콘솔 두번찍히는게 싫으면? index.js의 <React.StrictMode> 를 없애고 <App></App>만 남겨놓으면된다.
+  // index.js =>
+  let a = 123;
+  console.log(a);
+  // 함수는 되돌아가 호출할 때 num 다시초기값으로 가져오게 된다.
 
-  let [bgColor, setbgColor] = useState("white");
+  //state의 값 반영이 한 박자씩 늦는 이유
+  //state값이 변경되어 함수가 호출 될때 바로 변경값을 실행 하는게 아니라
+  //변경 되어야하는 set 함수들을 싹 모아서 함수가 끝나고 나서 한번에 처리한다. (비동기적)
+  //state 주의할 점
 
-  let changeBg = () => {
-    let newBG = bgColor == "white" ? "red" : "white";
-    setbgColor(newBG);
-  };
-
-  // map함수가 array의 갯수만큼 return을 반복한다.
-  // 매게변수(파라미터)를 만들어주면 함수 파라미터가 array자료 안에 있는 데이터가 된다.
-  [1, 2, 3].map(function (num) {
-    //코드 길어지면 엔터치고 ()안에다가 작성해야한다.
-    // return console.log(num);
-  });
-
-  // let num = [1, 2, 3, 4, 5];
-  // let newArr = num.map(function (element) {
-  //   return element * 3;
-  // });
-  // console.log(newArr);
-
-  //for문과 같다
-  // for (let i = 0; i < num.length; i++) {
-  //   num[i] = num[i] * 3;
-  // }
-  // console.log(num);
-
-  // let newNum = num.map((num) => num + 1);
-  // // console.log(num);
-  // console.log(newNum);
+  //state는 기존 값을 잃어버리지 않고 기억하고 있다.
 
   return (
-    <div className="App" style={{ backgroundColor: bgColor }}>
-      <h1>Hello, {user}!</h1>
-      <p>This is a React App</p>
-      <div>
-        <p>클릭시 + {count2}</p>
-        <button
-          onClick={() => {
-            setCount2(count2 + 5);
-          }}
-        >
-          5씩 올라가요
-        </button>
-      </div>
-
-      {title.map(function (item, index) {
-        return (
-          <div key={index} className="title">
-            <h4>{title[index]}</h4>
-            <span>👍 {count[index]}</span>
-            <button
-              onClick={() => {
-                let clone = [...count];
-                clone[index] = count[index] + 1;
-                setCount(clone);
-                console.log(index);
-              }}
-            >
-              좋아요
-            </button>
-
-            <button
-              onClick={() => {
-                let clone = [...count];
-                clone[index] = count[index] - 1;
-                setCount(clone);
-                // setCount(count - 1);
-              }}
-            >
-              싫어요
-            </button>
-            <p>안녕하세요. 저는 {user_name[index]}입니다.</p>
-          </div>
-        );
-      })}
-
-      <button
-        onClick={() => {
-          // deep copy
-          let copy = [...title];
-          // let copy = title; -> 얕은 복사
-          copy[2] = "리액트 화나요";
-          copy[1] = "어려워라...";
-          copy[0] = "아아아아아아아악!";
-          console.log(title == copy);
-          // 딥카피가 아닐때에는 가져온 값 같은 값이 아니기 때문에(false) 복사를 한다.
-          // 얕은 복사는 같은 갚으로 true반환
-          setTitle(copy);
-        }}
-      >
-        글 제목
-      </button>
-      <button
-        onClick={() => {
-          let textalign = [...title];
-          textalign.sort();
-
-          setTitle(textalign);
-        }}
-      >
-        글 정렬
-      </button>
-      <button
-        onClick={changeBg}
-        // setbgColor(
-        //   (document.querySelector(".App").style.backgroundColor = "red")
-        // );
-
-        // setbgColor(bgColor == "" ? "red" : "");
-      >
-        배경색 바꾸기
-      </button>
-
-      <button
-        onClick={changeName}
-        // let name_btn = [...user_name];
-        // name_btn[0] = "김채원";
-        // name_btn[1] = "사쿠라";
-        // name_btn[2] = "허윤진";
-      >
-        이름변경
-      </button>
+    <div className="App">
+      {/* <State></State> */}
+      <h1>{count}</h1>
+      <button onClick={increase}>+1</button>
     </div>
   );
 }

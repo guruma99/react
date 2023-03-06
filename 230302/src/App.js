@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import State from "./component/State";
 import { useState } from "react";
+import Box from "./component/Box";
 
 function App() {
   //State 라는거에 반응하기 때문에 react
@@ -43,7 +44,7 @@ function App() {
   // 💡 -> 콘솔 두번찍히는게 싫으면? index.js의 <React.StrictMode> 를 없애고 <App></App>만 남겨놓으면된다.
   // index.js =>
   let a = 123;
-  console.log(a);
+  // console.log(a);
   // 함수는 되돌아가 호출할 때 num 다시초기값으로 가져오게 된다.
 
   //state의 값 반영이 한 박자씩 늦는 이유
@@ -53,11 +54,23 @@ function App() {
 
   //state는 기존 값을 잃어버리지 않고 기억하고 있다.
 
+  let num1 = [1, 2, 3, 4];
+  let name = ["해민", "승호", "원재", "재학"];
   return (
     <div className="App">
-      {/* <State></State> */}
-      <h1>{count}</h1>
-      <button onClick={increase}>+1</button>
+      {/* <Box num="1" name="강"></Box>
+      <Box num="2" name="이"></Box>
+      <Box num="3" name="최"></Box>
+      <Box num="4" name="김"></Box> */}
+
+      {name.map(function (a, i) {
+        return (
+          <div className="box" key={i}>
+            <h1>Box{num1[i]}</h1>
+            <h2 className="red">{name[i]}</h2>
+          </div>
+        );
+      })}
     </div>
   );
 }

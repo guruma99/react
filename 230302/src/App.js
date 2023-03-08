@@ -6,6 +6,7 @@ import { useState } from "react";
 import Box from "./component/Box";
 import Comment from "./component/Comment";
 import Reply from "./component/Reply";
+import ReplyList from "./component/ReplyList";
 
 function App() {
   //State 라는거에 반응하기 때문에 react
@@ -87,9 +88,10 @@ function App() {
   //     })}
   //   </div>
   // );
+
   return (
     <div className="App">
-      <Reply></Reply>
+      <ReplyList />
     </div>
   );
 }

@@ -72,12 +72,26 @@ function ReplyList() {
     // });
   }
 
-  const onKeyPress = (e) => {
-    // if (e.key == "Enter" && name !== "" && content !== "") {
-    //   OnAdd();
-    // }
-    e.key == "Enter" && name !== "" && content !== "" ? OnAdd() : null;
+  const Alert = () => {
+    name == "" && content !== ""
+      ? alert("이름을 입력하세요")
+      : name !== "" && content == ""
+      ? alert("댓글을 입력하세요")
+      : name == "" && content == ""
+      ? alert("이름과 댓글을 입력하세요")
+      : OnAdd();
   };
+
+  const OnKeyPress = (e) => {
+    return e.key == "Enter" && name !== "" && content !== ""
+      ? OnAdd()
+      : e.key == "Enter" && name == "" && content !== ""
+      ? alert("이름을 입력하세요")
+      : e.key == "Enter" && name !== "" && content == ""
+      ? alert("댓글을 입력하세요")
+      : alert("이름과 댓글을 입력하세요");
+  };
+  // 키보드를 눌렀을 때의 함수라서 return 안으로 작성이 되는게 맞는거겠지?
 
   return (
     <div>
@@ -92,8 +106,6 @@ function ReplyList() {
           />
         );
       })}
-      {/* {addItem.map((item, index) => {
-      })} */}
 
       <span>
         이름 :
@@ -102,6 +114,7 @@ function ReplyList() {
           onChange={(e) => setName(e.target.value)}
           className="input_name"
           type="text"
+          onKeyPress={OnKeyPress}
         />
       </span>
 
@@ -112,22 +125,12 @@ function ReplyList() {
           onChange={(e) => setContent(e.target.value)}
           className="input_comment"
           type="text"
-          onKeyPress={onKeyPress}
+          onKeyPress={OnKeyPress}
         />
       </span>
-      <button
-        className="input-btn"
-        onClick={
-          name !== "" && content !== "" ? OnAdd : null
-          // if (input_name !== "" && input_comment !== "") {
-          //   const add = {
-          //     name: input_name.value,
-          //     comment: input_comment.value,
-          //   };
-          //   setRemove([...copyItem, add]);
-          // }
-        }
-      >
+      <button className="input-btn" onClick={Alert}>
+        {/* 함수() 다음에 소괄호를 붙이면 바로 실행이 되기 때문에 조건이 걸려있다면 바로실행되지않게 소괄호를 빼고 함수입력한다.
+        그래서 Alert() 가 아님. --->> 이렇게 되면 바로실행됨*/}
         댓글 추가
       </button>
     </div>

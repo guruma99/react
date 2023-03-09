@@ -21,3 +21,12 @@
 .bgc {
   background-color: red;
 } */
+
+.input-btn {
+  margin-left: 10px;
+  padding: 10px;
+  border-style: none;
+  background-color: #e1e1e1;
+  border-radius: 10px;
+  cursor: pointer;
+}
